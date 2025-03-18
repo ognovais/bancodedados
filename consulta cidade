@@ -1,0 +1,10 @@
+SELECT c.city, i.fname, i.birth_date
+FROM individual i
+JOIN customer c ON i.cust_id = c.cust_id
+WHERE (c.city, i.birth_date) IN (
+    SELECT c2.city, MIN(i2.birth_date)
+    FROM individual i2
+    JOIN customer c2 ON i2.cust_id = c2.cust_id
+    GROUP BY c2.city
+)
+ORDER BY c.city;
